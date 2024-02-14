@@ -50,7 +50,6 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
     //Validate Email & Password
     if (!email || !password) {
-      // return next(new ErrorResponse("Please provide an email and passowrd", 400));
       return res
         .status(400)
         .json({ message: "Please provide an email and passowrd" });
