@@ -30,7 +30,7 @@ exports.register = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      data: "User created successfully",
+      message: "User created successfully",
       statusCode: 200,
     });
   } catch (error) {
@@ -202,6 +202,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     options.secure = true;
   }
   const { name, email, number } = user;
+  console.log({ user });
   const data = { name, email, number };
 
   res
