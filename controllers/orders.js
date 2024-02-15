@@ -44,6 +44,11 @@ exports.GetSingleOrder = async (req, res) => {
 // Create an new order
 exports.CreateNewOrder = async (req, res) => {
   try {
+    const existingOrder = Order.findOne({ _id: req.body._id });
+    if (existingOrder)
+      return res
+        .status(400)
+        .json({ message: "Order Already Created ", success: false });
     const orderItemsIds = Promise.all(
       req.body.orderItems.map(async (orderItem) => {
         let newOrderItem = new OrderItem({
@@ -71,7 +76,9 @@ exports.CreateNewOrder = async (req, res) => {
 
     const totalPrice = totalPrices.reduce((a, b) => a + b, 0);
     const emailUser = req.body.email;
-    console.log(emailUser);
+    const colors = req.body.color;
+
+    console.log(colors);
     const user = await User.findOne({ email: emailUser });
     if (user) {
       let order = new Order({
@@ -85,6 +92,7 @@ exports.CreateNewOrder = async (req, res) => {
         state: req.body.state,
         email: req.body.email,
         Onote: req.body.Onote,
+        color: req.body.color,
         zip: req.body.zip,
         country: req.body.country,
         phone: req.body.phone,

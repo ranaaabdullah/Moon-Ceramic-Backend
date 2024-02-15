@@ -30,7 +30,6 @@ exports.getCategory = async (req, res) => {
 exports.createCategory = async (req, res) => {
   let category = new Category({
     name: req.body.name,
-    color: req.body.color,
   });
   category = await category.save();
 

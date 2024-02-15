@@ -40,6 +40,12 @@ exports.createProduct = async (req, res, next) => {
     const category = await Category.findById(req.body.category);
     if (!category) return res.status(400).send("Invalid Category");
 
+    const existingProduct = await Product.findOne({ name: req.body.name });
+    if (existingProduct)
+      return res
+        .status(400)
+        .json({ message: "Product already Created", success: false });
+
     if (req.files && req.files.length > 0) {
       const uploadedImages = req.files;
       // Upload all images to Cloudinary and collect their URLs
@@ -68,6 +74,7 @@ exports.createProduct = async (req, res, next) => {
         category: req.body.category,
         countInStock: req.body.countInStock,
         rating: req.body.rating,
+        color: req.body.color.split(","),
         numReviews: req.body.numReviews,
         isFeatured: req.body.isFeatured,
       });

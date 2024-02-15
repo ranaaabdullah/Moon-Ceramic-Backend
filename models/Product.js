@@ -16,6 +16,11 @@ const productSchema = mongoose.Schema(
         default: "no-photo.jpg",
       },
     ],
+    color:[
+      {
+        type :String,
+      }
+    ],
     price: {
       type: Number,
       default: 0,
